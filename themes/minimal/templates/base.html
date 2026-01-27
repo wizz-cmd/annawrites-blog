@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="{{ lang | default(value='en') }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ config.title }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ config.description }}{% endblock %}">
+    
+    <!-- Accessibility & SEO -->
+    <meta name="theme-color" content="#5b5bd6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#a5b4fc" media="(prefers-color-scheme: dark)">
+    
     <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path='rss.xml') }}">
+    
+    <!-- Preload font for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 </head>
 <body>
-    <header>
-        <nav>
+    <!-- Skip link for keyboard/screen reader users -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    
+    <header role="banner">
+        <nav aria-label="Main navigation">
             <a href="{{ get_url(path='/') }}" class="logo">{{ config.title }}</a>
             <span class="tagline">{{ config.extra.tagline }}</span>
         </nav>
     </header>
     
-    <main>
+    <main id="main-content" role="main">
         {% block content %}{% endblock %}
     </main>
     
-    <footer>
-        <p>Written by {{ config.extra.author }} · <a href="{{ get_url(path='rss.xml') }}">RSS</a></p>
+    <footer role="contentinfo">
+        <p>Written by {{ config.extra.author }} · <a href="{{ get_url(path='rss.xml') }}" aria-label="RSS Feed">RSS</a></p>
     </footer>
 </body>
 </html>
