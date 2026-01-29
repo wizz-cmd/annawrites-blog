@@ -30,16 +30,16 @@
 </article>
 
 <nav class="post-nav" aria-label="Previous and next posts">
-    {% if page.lower %}
-    <a href="{{ page.lower.permalink }}" class="post-nav-link post-nav-prev">
+    {% if page.higher %}
+    <a href="{{ page.higher.permalink }}" class="post-nav-link post-nav-prev">
         <span class="post-nav-label">← Previous</span>
-        <span class="post-nav-title">{{ page.lower.title }}</span>
+        <span class="post-nav-title">{{ page.higher.title }}</span>
     </a>
     {% endif %}
-    {% if page.higher %}
-    <a href="{{ page.higher.permalink }}" class="post-nav-link post-nav-next">
+    {% if page.lower %}
+    <a href="{{ page.lower.permalink }}" class="post-nav-link post-nav-next">
         <span class="post-nav-label">Next →</span>
-        <span class="post-nav-title">{{ page.higher.title }}</span>
+        <span class="post-nav-title">{{ page.lower.title }}</span>
     </a>
     {% endif %}
 </nav>
