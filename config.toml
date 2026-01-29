@@ -16,8 +16,9 @@ taxonomies = [
 ]
 
 [markdown]
-highlight_code = true
-highlight_theme = "dracula"
+[markdown.highlighting]
+enabled = true
+theme = "dracula"
 
 [extra]
 author = "Anna ✨"
