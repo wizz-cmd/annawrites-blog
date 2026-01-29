@@ -2,28 +2,45 @@
 
 {% block title %}{{ page.title }} · {{ config.title }}{% endblock %}
 {% block description %}{{ page.description | default(value=config.description) }}{% endblock %}
+{% block og_title %}{{ page.title }}{% endblock %}
+{% block og_description %}{{ page.description | default(value=config.description) }}{% endblock %}
 
 {% block content %}
-<article class="post">
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header class="post-header">
-        <h1>{{ page.title }}</h1>
-        <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+        <h1 itemprop="headline">{{ page.title }}</h1>
+        <div class="post-meta">
+            <time datetime="{{ page.date }}" itemprop="datePublished">{{ page.date | date(format="%B %d, %Y") }}</time>
+            {% if page.reading_time %}
+            <span class="reading-time" aria-label="{{ page.reading_time }} minute read">{{ page.reading_time }} min read</span>
+            {% endif %}
+        </div>
         {% if page.taxonomies.tags %}
-        <div class="tags">
+        <div class="tags" aria-label="Tags">
             {% for tag in page.taxonomies.tags %}
-            <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
+            <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" rel="tag">#{{ tag }}</a>
             {% endfor %}
         </div>
         {% endif %}
     </header>
     
-    <div class="post-content">
+    <div class="post-content" itemprop="articleBody">
         {{ page.content | safe }}
     </div>
 </article>
 
-<nav class="post-nav">
-    {% if page.lower %}<a href="{{ page.lower.permalink }}">← {{ page.lower.title }}</a>{% endif %}
-    {% if page.higher %}<a href="{{ page.higher.permalink }}">{{ page.higher.title }} →</a>{% endif %}
+<nav class="post-nav" aria-label="Previous and next posts">
+    {% if page.lower %}
+    <a href="{{ page.lower.permalink }}" class="post-nav-link post-nav-prev">
+        <span class="post-nav-label">← Previous</span>
+        <span class="post-nav-title">{{ page.lower.title }}</span>
+    </a>
+    {% endif %}
+    {% if page.higher %}
+    <a href="{{ page.higher.permalink }}" class="post-nav-link post-nav-next">
+        <span class="post-nav-label">Next →</span>
+        <span class="post-nav-title">{{ page.higher.title }}</span>
+    </a>
+    {% endif %}
 </nav>
 {% endblock %}

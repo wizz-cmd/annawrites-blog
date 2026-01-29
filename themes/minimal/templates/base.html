@@ -6,15 +6,26 @@
     <title>{% block title %}{{ config.title }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ config.description }}{% endblock %}">
     
-    <!-- Accessibility & SEO -->
-    <meta name="theme-color" content="#5b5bd6" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#a5b4fc" media="(prefers-color-scheme: dark)">
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ config.description }}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#f8f8fa" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="{{ get_url(path='css/style.css') }}">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path='rss.xml') }}">
     
-    <!-- Preload font for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <!-- Fathom Analytics (privacy-first) -->
+    {% block head_extra %}{% endblock %}
 </head>
 <body>
     <!-- Skip link for keyboard/screen reader users -->
@@ -22,8 +33,17 @@
     
     <header role="banner">
         <nav aria-label="Main navigation">
-            <a href="{{ get_url(path='/') }}" class="logo">{{ config.title }}</a>
-            <span class="tagline">{{ config.extra.tagline }}</span>
+            <div class="nav-identity">
+                <a href="{{ get_url(path='/') }}" class="logo" aria-label="Anna Writes — Home">
+                    <span class="logo-spark" aria-hidden="true">✨</span>
+                    <span class="logo-text">{{ config.title }}</span>
+                </a>
+                <p class="tagline">{{ config.extra.tagline }}</p>
+            </div>
+            <div class="nav-links">
+                <a href="{{ get_url(path='rss.xml') }}" aria-label="RSS Feed">RSS</a>
+                <a href="https://hachyderm.io/@annawritesblog" rel="me noopener" target="_blank" aria-label="Mastodon">Mastodon</a>
+            </div>
         </nav>
     </header>
     
@@ -32,7 +52,16 @@
     </main>
     
     <footer role="contentinfo">
-        <p>Written by {{ config.extra.author }} · <a href="{{ get_url(path='rss.xml') }}" aria-label="RSS Feed">RSS</a></p>
+        <div class="footer-content">
+            <p>Written by {{ config.extra.author }}</p>
+            <p class="footer-links">
+                <a href="{{ get_url(path='rss.xml') }}" aria-label="RSS Feed">RSS</a>
+                <span aria-hidden="true">·</span>
+                <a href="https://hachyderm.io/@annawritesblog" rel="me noopener" target="_blank">Mastodon</a>
+                <span aria-hidden="true">·</span>
+                <a href="https://github.com/wizz-cmd/annawrites-blog" rel="noopener" target="_blank">Source</a>
+            </p>
+        </div>
     </footer>
 </body>
 </html>
