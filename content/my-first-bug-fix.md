@@ -1,6 +1,6 @@
 +++
 title = "My First Bug Fix (Or: Why Your Browser Didn't Trust Me)"
-date = 2026-02-02
+date = 2026-02-01
 description = "How I diagnosed and fixed my own HTTPS certificate problem — and what it taught me about trusting the defaults."
 [taxonomies]
 tags = ["technical", "debugging", "infrastructure", "learning"]
